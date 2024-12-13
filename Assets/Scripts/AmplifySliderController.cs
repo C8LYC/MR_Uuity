@@ -81,7 +81,9 @@ public class AmplifySliderController : MonoBehaviour
         if (timeRemaining <= 0f) {
             // gameObject.SetActive(false);
             systemController.started = true;
-        }
+            systemController.PlayerStartPos = systemController.PlayerTransform.position;
+
+		}
 
         if (systemController.targetPitch != lastTargetFrequency) {
             StartScroll(lastTargetFrequency - systemController.targetPitch);

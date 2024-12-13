@@ -9,9 +9,16 @@ public class SwayController : MonoBehaviour
 
     private Quaternion originalRotation;
     private float swayTimer = 0f;
-    public Transform Player { get; set; }
+    Vector3 PlayerPos { get; set; }
+    SystemController systemController { get; set; }
+	/// <summary>
+	/// Amplitude between 0.4f ~ 0.58f
+	/// </summary>
+    float AmplitudeRange = 0.18f;
 
-    void Start()
+	// max distance = 2f;
+
+	void Start()
     {
         if (targetObject != null)
         {
@@ -24,7 +31,7 @@ public class SwayController : MonoBehaviour
         if (targetObject == null)
             return;
 
-        if (trigger)
+        if (trigger && IsAmplitudeInRange())
         {
             ApplySwayingRotation();
         }
@@ -34,7 +41,18 @@ public class SwayController : MonoBehaviour
         }
     }
 
-    void ApplySwayingRotation()
+    bool IsAmplitudeInRange()
+    {
+        float dis = Vector3.Distance(transform.position, PlayerPos);
+        if(dis / 2f * AmplitudeRange + 0.4f < systemController.amplitude || dis / 2f * AmplitudeRange + 0.4f - AmplitudeRange / 10f > systemController.amplitude)
+        {
+            return false;
+        }
+        return true;
+	}
+
+
+	void ApplySwayingRotation()
     {
         swayTimer += Time.deltaTime * swaySpeed;
         float swayFactor = Mathf.Sin(swayTimer); // Oscillates between -1 and 1
@@ -47,5 +65,11 @@ public class SwayController : MonoBehaviour
     {
         targetObject.transform.rotation = originalRotation;
         swayTimer = 0f; // Reset the timer to start the sway from the beginning when triggered again
+    }
+
+    public void InitSetting(SystemController systemController)
+    {
+        PlayerPos = systemController.PlayerStartPos;
+        this.systemController = systemController;
     }
 }

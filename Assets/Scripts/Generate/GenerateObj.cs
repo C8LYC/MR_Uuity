@@ -10,7 +10,7 @@ public class GenerateObj : MonoBehaviour
 	public bool TestGenerate = true;
 	public float MaxGenerateTime = 3f;
 	public GameObject BoldDandelionPrefab;
-	float GenerateTime = 3f;
+	//float GenerateTime = 3f;
 	GradeCounter gradeCounter;
 
 	private void Start()
@@ -21,18 +21,20 @@ public class GenerateObj : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
+		/*
 		if(TestGenerate)
 		{
 			GenerateTime -= Time.deltaTime;
 			if (GenerateTime < 0f)
 			{
-				GenerateOneObj();
+				GenerateOneObj(new SystemController());
 				GenerateTime = MaxGenerateTime;
 			}
 		}
+		*/
 	}
 
-    public void GenerateOneObj()
+    public void GenerateOneObj(SystemController systemController)
     {
         GameObject newObj = Instantiate(GenerateObjPrefab, GenerateArea.transform);
         newObj.transform.parent = null;
@@ -40,6 +42,14 @@ public class GenerateObj : MonoBehaviour
         objs.Add(newObj);
         newObj.transform.localPosition = RandomPointInBounds(GenerateArea.bounds);
         newObj.GetComponentInChildren<SizeLerperWithCurve>().startLerp = true;
+		SwayController[] swayControllers = newObj.GetComponentsInChildren<SwayController>();
+		if( swayControllers.Length > 0 )
+		{
+			foreach( SwayController controller in swayControllers )
+			{
+				controller.InitSetting(systemController);
+			}
+		}
 		if(gradeCounter)
 		{
 			gradeCounter.NewDandelion();

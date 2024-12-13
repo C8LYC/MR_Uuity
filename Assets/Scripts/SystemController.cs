@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SystemController : MonoBehaviour {
-    public GameObject camera;
+    public new GameObject camera;
     public float amplitude;
     public float pitch;
     public bool started;
     public bool paused;
     public bool canReset;
     public bool finished;
+	public Vector3 PlayerStartPos { get; set; }
+    public Transform PlayerTransform;
 
-    // Pitch
-    private int targetMidiNumber;
+	// Pitch
+	private int targetMidiNumber;
     public float targetPitch;
     public float minPitch;
     public float maxPitch;
@@ -63,11 +65,13 @@ public class SystemController : MonoBehaviour {
         // MAX_AMPLIFY = 0.6f;
 
         dandelionGenerator = dandelionGeneratorObject.GetComponent<GenerateObj>();
+        /*
         swayControllers = swayControllerObject.GetComponents<SwayController>();
         foreach (SwayController swayController in swayControllers) {
             originalRotationOffset = swayController.rotationOffset;
             originalSwaySpeed = swayController.swaySpeed;
         }
+        */
         swayOffset = 1f;
     }
 
@@ -104,7 +108,7 @@ public class SystemController : MonoBehaviour {
         timeRemainingToCreate -= Time.deltaTime;
         if (timeRemainingToCreate <= 0f) {
             if (isWithinRange()) {
-                dandelionGenerator.GenerateOneObj();
+                dandelionGenerator.GenerateOneObj(this);
             } else {
                 dandelionGenerator.GenerateOneBoldDandelion();
             }
