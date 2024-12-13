@@ -262,15 +262,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -312,6 +312,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dandelion
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -8700617353114198275, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
@@ -333,6 +337,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6143337275054804627}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7537582914059904302}
   m_SourcePrefab: {fileID: 100100000, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
 --- !u!4 &1357795468922190994 stripped
 Transform:
@@ -375,6 +382,29 @@ MonoBehaviour:
   butterflyAnimator: {fileID: 84368971238802551}
   butterflyRigidbody: {fileID: 0}
   butterflyGameObject: {fileID: 2750610114992927880}
+--- !u!114 &7537582914059904302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845362473051203112}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7675ebc70d794954bec902241178d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 3305459827579386754}
+  targetColor1: {r: 0.6037736, g: 0.42098323, b: 0.31612673, a: 1}
+  targetColor2: {r: 0.33962262, g: 0.18578796, b: 0.004805972, a: 1}
+  targetColor3: {r: 0, g: 0, b: 0, a: 1}
+  lerpDuration: 3
+  transparencyLerpDuration: 3
+--- !u!1 &3305459827579386754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5151492872390713093, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}
+  m_PrefabInstance: {fileID: 1539495179373812601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5246113880581459181 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2481322372141066348, guid: 6835d902688d34fceabed3f9a77335d2, type: 3}

@@ -65,7 +65,7 @@ public class LerpMaterialColors : MonoBehaviour
             if (lerpTime >= transparencyLerpDuration)
             {
                 // Destroy the parent object after full transparency
-                Destroy(parentObject);
+                Destroy(parentObject.transform.parent.gameObject);
             }
         }
     }
