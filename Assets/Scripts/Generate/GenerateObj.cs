@@ -5,7 +5,6 @@ using UnityEngine;
 public class GenerateObj : MonoBehaviour
 {
     public GameObject GenerateObjPrefab;
-	public SwayController swayController;
     List<GameObject> objs = new List<GameObject>();
     public BoxCollider GenerateArea;
 	public bool TestGenerate = true;
@@ -39,6 +38,7 @@ public class GenerateObj : MonoBehaviour
         newObj.transform.localScale = Vector3.one;
         objs.Add(newObj);
         newObj.transform.localPosition = RandomPointInBounds(GenerateArea.bounds);
+        newObj.GetComponentInChildren<SizeLerperWithCurve>().Grow();
 		if(gradeCounter)
 		{
 			gradeCounter.NewDandelion();
