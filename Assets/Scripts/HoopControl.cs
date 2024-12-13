@@ -10,7 +10,7 @@ public class HoopControl : MonoBehaviour {
         if (airplane != null) {
             airplaneTransform = airplane.transform;
         }
-        else Debug.LogError("Airplane not found. Make sure the airplane GameObject has the 'Airplane' tag.");
+        else Debug.LogError("Airplane not found. Make sure the airplane GameObject has the 'Player' tag.");
     }
     
 

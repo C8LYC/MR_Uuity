@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/TrillSlideMainScene.unity
+    guid: ff291323546084ea6b67e6a3889e9151
+  - enabled: 1
+    path: Assets/Scenes/TrillPitchScene.unity
+    guid: 2f1c7b4d856e54a8da0488fc28eebe0f
+  - enabled: 1
+    path: Assets/Scenes/TrillSlidePro.unity
+    guid: 430b90aa178284357ae03183e8938f46
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4b60a64587534884898c04de8ed29232, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b1a1561d9dc1f2c46809beac84b3da5c, type: 2}

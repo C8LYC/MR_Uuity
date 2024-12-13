@@ -16,7 +16,7 @@ public class Airplane : MonoBehaviour {
     private int curEvent = 0;
     private float totalBeat = 0;
     private float baseTime = 0f;
-
+ 
     [Header("Starting Information")]
     public TextMeshProUGUI instructionText;
     public float pitchTolerance = 300f;
@@ -46,6 +46,7 @@ public class Airplane : MonoBehaviour {
     [Header("Audio Processing")]
     private Process pythonProcess; // Process to handle the Python script
     private UDPReceiver trillReceiver; // Keeps the trillReceiver logic
+    private UDPReceiver pitchReceiver;
     private float[] audioData;
 
     [Header("Audio Settings")]
@@ -57,14 +58,15 @@ public class Airplane : MonoBehaviour {
 
     void Awake() {
         baseTime = GlobalSettings.curBeat();
+        HistoryManager.Initialize();
     }
 
     void Start() {
         instructionText.gameObject.SetActive(false);
-        curMode = 0;
+        curMode = -1;
         rb = GetComponent<Rigidbody>();
         trillReceiver = new UDPReceiver(5007, ReceiveTrillData);
-        AubioWrapper.Initialize(bufferSize, bufferSize / 2, sampleRate);
+        pitchReceiver = new UDPReceiver(5005, ReceivePitchData);
         StartMicrophone();
         // Start game stuff 
         introStartPosition = new Vector3(
@@ -106,7 +108,6 @@ public class Airplane : MonoBehaviour {
     void WaitForCorrectPitch() {
         float startPitch = GlobalSettings.levelData.intro.startNote;
 
-        DetectPitch();
         if (trillState && Mathf.Abs(startPitch - targetPitch) <= pitchTolerance) {
             isPitchCorrect = true;
             instructionText.gameObject.SetActive(false);
@@ -114,7 +115,6 @@ public class Airplane : MonoBehaviour {
 
             // Transition to main game state
             GlobalSettings.gameState = 1; // Game starts
-            GlobalSettings.level = 0;
             Time.timeScale = 0;
             UnityEngine.Debug.Log("Correct pitch detected! Loading scenes...");
         }
@@ -146,8 +146,9 @@ public class Airplane : MonoBehaviour {
         // Use aubio_get_pitch to detect pitch and update targetPitch
         if (GlobalSettings.level == -1) return;
         float currentBeat = GlobalSettings.curBeat();
-        DetectPitch();
+        UnityEngine.Debug.LogWarning($"Debug: curMode={curMode}, level={GlobalSettings.level}");
         if (curMode != GlobalSettings.level) {
+            UnityEngine.Debug.LogWarning("new mode");
             curMode = GlobalSettings.level;
             baseTime = GlobalSettings.curBeat();
             curEvent = 0;
@@ -206,23 +207,6 @@ public class Airplane : MonoBehaviour {
     }
 
 
-    void DetectPitch() {
-        if (!isMicrophoneActive || microphoneClip == null)
-            return;
-
-        // Ensure microphone has started
-        int micPosition = (int)Microphone.GetPosition(null) - (int)bufferSize;
-        if (micPosition < 0)
-            return;
-
-        // Retrieve audio data from the microphone
-        audioData = new float[bufferSize];
-        microphoneClip.GetData(audioData, micPosition);
-
-        float pitch = AubioWrapper.GetPitch(audioData);
-        targetPitch = Mathf.Clamp(pitch + GlobalSettings.heightOffset, 0, 150); // Restrict pitch range
-
-    }
 
     void ReceiveTrillData(string message) {
         try {
@@ -230,6 +214,19 @@ public class Airplane : MonoBehaviour {
         }
         catch (Exception ex) {
             UnityEngine.Debug.LogError($"Trill UDP Receive Error: {ex.Message}");
+        }
+    }
+
+    void ReceivePitchData(string message) {
+        try {
+            float freq = float.Parse(message.Trim());
+            float curPitch = 69 + 12 * Mathf.Log(freq / 440.0f, 2);
+            HistoryManager.AddEntry(curPitch);
+            targetPitch = HistoryManager.GetMean();
+            UnityEngine.Debug.Log($"Get pitch: {targetPitch}");
+        }
+        catch (Exception ex) {
+            UnityEngine.Debug.LogError($"Pitch UDP Receive Error: {ex.Message}");
         }
     }
 
@@ -258,7 +255,7 @@ public class Airplane : MonoBehaviour {
         }
 
         trillReceiver.Stop();
-        AubioWrapper.CleanUp();
+        pitchReceiver.Stop();
     }
 
 }

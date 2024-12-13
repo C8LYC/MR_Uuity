@@ -66,8 +66,7 @@ public class SceneManagement : MonoBehaviour {
         if (gameState == 0 && GlobalSettings.gameState == 1) {
            LoadSceneAdditive(scenes[0]);
            GlobalSettings.level = 0;
-        }
-        if (GlobalSettings.changeTime - GlobalSettings.curBeat() <= 1e-6) {
+        } else if (GlobalSettings.changeTime - GlobalSettings.curBeat() <= 1e-6) {
             GlobalSettings.changeTime = 10000000000;
             SwitchMode();
             GlobalSettings.level += 1;
