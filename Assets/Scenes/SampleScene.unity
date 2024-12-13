@@ -1393,6 +1393,7 @@ MonoBehaviour:
   GenerateArea: {fileID: 1327422201}
   TestGenerate: 0
   MaxGenerateTime: 3
+  BoldDandelionPrefab: {fileID: 1845362473051203112, guid: 0d9947df500604d46955a8ac1dadbafe, type: 3}
 --- !u!4 &929887561
 Transform:
   m_ObjectHideFlags: 0
@@ -1518,6 +1519,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194230}
   - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
@@ -1533,7 +1535,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -1660,6 +1662,19 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b8657e2f96847e3a72e02e68d2c36a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteText: {fileID: 0}
 --- !u!1 &993965626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,6 +2500,7 @@ MonoBehaviour:
   SpawnLocations: 1
   MaxIterations: 1000
   Labels: 1
+  PlayerObj: {fileID: 0}
 --- !u!1 &1455197541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3109,6 +3125,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 202172910961679383, guid: a2e6d054110b947a89271ff9872db7f1, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 963194225}
     - target: {fileID: 202172910961679383, guid: a2e6d054110b947a89271ff9872db7f1, type: 3}
       propertyPath: SwayControllerObject
       value: 

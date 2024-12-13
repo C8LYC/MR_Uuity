@@ -9,7 +9,7 @@ public class AmplifySliderController : MonoBehaviour
     public Image CDTextImage;
     public Image CDBGImage;
     public GradeCounter gradeCounter;
-    private Text countDownText;
+    private Text noteDisplayText;
     public GameObject scale;
     [SerializeField] private GameObject scaleMarkPrefab;
     public bool isScrolling;
@@ -27,15 +27,19 @@ public class AmplifySliderController : MonoBehaviour
     private float SCROLL_TIMER;
     private float scrollTimeRemaining;
 
+    // scroll
+    private float lastTargetFrequency;
+
     // Start is called before the first frame update
     void Start() {
-        countDownText = gameObject.GetComponentInChildren<Text>();
+        noteDisplayText = gameObject.GetComponentInChildren<Text>();
         actualAmplifyRectTransform = gameObject.transform.GetChild(1).gameObject.GetComponent<RectTransform>();
         systemController = GameObject.Find("System").GetComponent<SystemController>();
-        systemController.amplitude = 0.0f;
+        systemController.pitch = 0.0f;
         
         isScrolling = false;
         ScrollingShift = 200f;
+        lastTargetFrequency = 0f;
 
         MAX_Y = 240;
         MIN_Y = -240;
@@ -51,27 +55,37 @@ public class AmplifySliderController : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        float posY = (systemController.amplitude * OFFSET) + MIN_Y;
+        float posY = (
+            ((systemController.pitch - systemController.minDisplayPitch) / 
+            (systemController.maxDisplayPitch - systemController.minDisplayPitch)) * OFFSET) + MIN_Y;
         actualAmplifyRectTransform.anchoredPosition = new Vector2(0, posY);
+        noteDisplayText.text = systemController.getNoteNameNow();
 
-        if (systemController.isWithinRange()) {
-            timeRemaining -= Time.deltaTime;
-            countDownText.text = "" + (int)timeRemaining;
-            CDTextImage.sprite = CDSprite[Mathf.Min((int) timeRemaining + 1, CDSprite.Count - 1)];
-			CDTextImage.color = new Color(255f, 255f, 255f);
-            CDBGImage.fillAmount = timeRemaining - (int) timeRemaining;
-		} else {
-            timeRemaining = TIMER;
-            countDownText.text = "";
-			CDTextImage.sprite = null;
-            CDTextImage.color = new Color(255f, 255f, 255f, 0f);
-            CDBGImage.fillAmount = 0f;
-            gradeCounter.AllDandelionDead();
-		}
+        Debug.Log("systemController.started: " + systemController.started);
+        if (systemController.started == false) {
+            Debug.Log("systemController.isWithinRange()" + systemController.isWithinRange());
+            if (systemController.isWithinRange()) {
+                timeRemaining -= Time.deltaTime;
+                CDTextImage.sprite = CDSprite[Mathf.Min((int) timeRemaining + 1, CDSprite.Count - 1)];
+                CDTextImage.color = new Color(255f, 255f, 255f);
+                CDBGImage.fillAmount = timeRemaining - (int) timeRemaining;
+            } else {
+                timeRemaining = TIMER;
+                CDTextImage.sprite = null;
+                CDTextImage.color = new Color(255f, 255f, 255f, 0f);
+                CDBGImage.fillAmount = 0f;
+                gradeCounter.AllDandelionDead();
+            }
+        }
 
         if (timeRemaining <= 0f) {
-            gameObject.SetActive(false);
+            // gameObject.SetActive(false);
             systemController.started = true;
+        }
+
+        if (systemController.targetPitch != lastTargetFrequency) {
+            StartScroll(lastTargetFrequency - systemController.targetPitch);
+            lastTargetFrequency = systemController.targetPitch;
         }
 
         if (isScrolling) {
@@ -120,11 +134,11 @@ public class AmplifySliderController : MonoBehaviour
                 scaleMark.GetComponent<RectTransform>().anchoredPosition = new Vector2(-5.5f, posY);
             }
             for (; maxPosY <= 241.5f; maxPosY += 28f) {
-                Debug.Log("maxPosY = " + maxPosY);
+                // Debug.Log("maxPosY = " + maxPosY);
                 GenerateScale(maxPosY);
             }
             for (; minPosY >= -241.5f; minPosY -= 28f) {
-                Debug.Log("minPosY = " + minPosY);
+                // Debug.Log("minPosY = " + minPosY);
                 GenerateScale(minPosY);
             }
         } else {
