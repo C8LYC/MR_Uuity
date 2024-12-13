@@ -6,6 +6,7 @@ using System;
 using UnityEngine.UI;
 
 
+
 [System.Serializable]
 public class NoteEvent
 {
@@ -64,6 +65,8 @@ public class Board : MonoBehaviour
     private int boardRotationIndex = 0;
     private Vector3 prePosition;
     private bool start = false;
+
+    public float scale;
 
     void Start()
     {
@@ -186,7 +189,7 @@ public class Board : MonoBehaviour
 
     float CalculateLength(float duration)
     {
-        return duration * 15f; // 將持續時間轉換為板子長度
+        return duration * 15f * scale; // 將持續時間轉換為板子長度
     }
 
     GameObject SpawnBoard(Vector3 position, float length, int note)
@@ -246,7 +249,7 @@ public class Board : MonoBehaviour
 
         // 计算箱子的位置
         //Vector3 boxPosition = boardStartPosition + board.transform.right * boxOffset; // 起始点向右偏移 boxOffset 距离
-        boxPosition.y = board.transform.position.y + 0.05f; // 稍微抬高以便可见
+        boxPosition.y = board.transform.position.y + 0.05f * scale; // 稍微抬高以便可见
 
         // 生成箱子
         GameObject box = Instantiate(boxPrefab, boxPosition, Quaternion.identity, spawnParent);
@@ -258,8 +261,8 @@ public class Board : MonoBehaviour
         // 添加 BoxController 并设置属性
         BoxController boxController = box.AddComponent<BoxController>();
         boxController.board = board; // 关联箱子的板子
-        boxController.destroyHeight = board.transform.position.y - 5f; // 设置最低销毁高度
-        boxController.boardMargin = 0.1f; // 设置板子边界范围
+        boxController.destroyHeight = board.transform.position.y - 5f * scale; // 设置最低销毁高度
+        boxController.boardMargin = 0.1f * scale; // 设置板子边界范围
         boxController.box = box;
 
 
@@ -274,12 +277,12 @@ public class Board : MonoBehaviour
         GameObject textObject = new GameObject("NoteName");
         TextMesh textMesh = textObject.AddComponent<TextMesh>();
         textMesh.text = noteName;
-        textMesh.fontSize = 12;
+        textMesh.fontSize = 1;
         textMesh.color = Color.black;
         textMesh.alignment = TextAlignment.Center;
 
         // 設置文字位置（位於板子上方）
-        textObject.transform.position = new Vector3(position.x, position.y + 2f, position.z);
+        textObject.transform.position = new Vector3(position.x, position.y + 2f * scale, position.z);
         textObject.transform.SetParent(board.transform); // 將文字作為板子的子物件
     }
 

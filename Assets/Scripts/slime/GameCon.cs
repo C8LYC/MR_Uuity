@@ -30,16 +30,17 @@ public class GameCon : MonoBehaviour
     private List<Transform> stairs = new List<Transform>(); // 保存所有生成的阶梯
     //private bool gameStarted = false;
     //private Animator slimeAnimator; // 角色的 Animator
+    public GameObject targetObject;
 
+    public float scale;
 
     void Start()
     {
         // 确保游戏开始前按钮可见，倒计时文本隐藏
         startButton.SetActive(true);
         countdownText.gameObject.SetActive(false);
-        GameObject targetObject = GameObject.Find("Player");
+        //GameObject targetObject = GameObject.Find("Player");
         GlobalSettings.midiNotePlayer = targetObject.GetComponent<MidiNotePlayer>();
-
 
     }
 
@@ -125,7 +126,7 @@ public class GameCon : MonoBehaviour
     private IEnumerator BuildStaircaseAndAnimateSlime()
     {
         // 计算初始位置和目标位置
-        Vector3 startPosition = new Vector3(firstBoard.position.x - stepHorizontalSpacing * (firstBoard.position.y - groundHeight)/stepHeight - 15, groundHeight, firstBoard.position.z);
+        Vector3 startPosition = new Vector3(firstBoard.position.x - stepHorizontalSpacing * (firstBoard.position.y - groundHeight)/stepHeight - 15 * scale, groundHeight, firstBoard.position.z);
         Vector3 targetPosition = firstBoard.position;
 
         // 生成阶梯
@@ -161,7 +162,7 @@ public class GameCon : MonoBehaviour
         foreach (Transform step in stairs)
         {
             // 计算目标位置
-            Vector3 targetPosition = step.position + new Vector3(0, 2f, 0); // 确保在阶梯顶部
+            Vector3 targetPosition = step.position + new Vector3(0, 4f * scale, 0); // 确保在阶梯顶部
 
             // 播放 Jump 动画
             if (slimeAnimator != null)
@@ -175,7 +176,7 @@ public class GameCon : MonoBehaviour
             }
 
             // 开始跳跃
-            yield return StartCoroutine(JumpToPosition(slime.transform, targetPosition, 1.5f)); // 跳跃幅度调整为 1.5f
+            yield return StartCoroutine(JumpToPosition(slime.transform, targetPosition, 1.5f * scale)); // 跳跃幅度调整为 1.5f
         }
         if (slimeAnimator != null)
         {

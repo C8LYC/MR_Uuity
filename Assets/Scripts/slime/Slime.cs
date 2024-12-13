@@ -7,7 +7,7 @@ using System.Diagnostics;
 public class Slime : MonoBehaviour
 {
     [Header("Slime Settings")]
-    public static float speed = 7f;          // Forward speed of the airplane
+    public static float speed = 0.7f;          // Forward speed of the airplane
     public static float dyn_speed = 0f;
     public float pitchSensitivity = 3f; // How sensitive the airplane is to pitch changes
     public int L_range_Midi = 53;
@@ -19,7 +19,7 @@ public class Slime : MonoBehaviour
     public float ceilingLevel = 40f;
     private float verticalVelocity = 0f;
     private float lerpSpeed = 50f;
-    private float heightOffset = 0f;
+    private float heightOffset = 1f;
 
     [Header("Rigidbody Settings")]
     private Rigidbody rb;

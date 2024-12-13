@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -503,13 +502,13 @@ MonoBehaviour:
   spawnParent: {fileID: 387962890}
   jsonFilePath: Assets/Levels/Slime/output2.json
   groundLevel: 0
-  heightOffset: 0
-  ceilingLevel: 40
+  heightOffset: 1
+  ceilingLevel: 2
   H_range_Midi: 80
   L_range_Midi: 53
   left: 0
-  right: 50
-  boxOffset: 2
+  right: 2.5
+  boxOffset: 0.1
   airplane: {fileID: 0}
   flightSpeed: 3
   propeller: {fileID: 0}
@@ -517,6 +516,7 @@ MonoBehaviour:
   isCrashed: 0
   gameOverText: {fileID: 1540464562}
   gameWonText: {fileID: 1590242908}
+  scale: 0.05
 --- !u!4 &412528427
 Transform:
   m_ObjectHideFlags: 0
@@ -1110,8 +1110,10 @@ MonoBehaviour:
   stepDelay: 0.1
   slimeSpeed: 1.5
   groundHeight: 0
-  stepHorizontalSpacing: 5
-  stepHeight: 2
+  stepHorizontalSpacing: 0.5
+  stepHeight: 0.2
+  targetObject: {fileID: 2040083761}
+  scale: 0.05
 --- !u!4 &764176065
 Transform:
   m_ObjectHideFlags: 0
@@ -1530,19 +1532,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6118174221721670358, guid: 66ae442726d1cf4428dacb34edd61ac4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6118174221721670358, guid: 66ae442726d1cf4428dacb34edd61ac4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6118174221721670358, guid: 66ae442726d1cf4428dacb34edd61ac4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6118174221721670358, guid: 66ae442726d1cf4428dacb34edd61ac4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6118174221721670358, guid: 66ae442726d1cf4428dacb34edd61ac4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1642,7 +1644,7 @@ MonoBehaviour:
   H_range_Midi: 80
   gravity: 9.8
   groundLevel: 0
-  ceilingLevel: 20
+  ceilingLevel: 2
   sampleRate: 44100
   bufferSize: 2048
   boardPrefab: {fileID: 6398881268436254362, guid: 871680f0d410c428c83ca88c030ad1ab, type: 3}
@@ -2455,6 +2457,7 @@ GameObject:
   - component: {fileID: 2040083762}
   - component: {fileID: 2040083764}
   - component: {fileID: 2040083763}
+  - component: {fileID: 2040083765}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -2536,6 +2539,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2040083761}
   m_Enabled: 1
+--- !u!114 &2040083765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040083761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b8657e2f96847e3a72e02e68d2c36a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteText: {fileID: 0}
 --- !u!1 &2047553862
 GameObject:
   m_ObjectHideFlags: 0
@@ -2703,7 +2719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &2093622135
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2711,7 +2727,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093622134}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &2093622136
 Camera:
   m_ObjectHideFlags: 0
