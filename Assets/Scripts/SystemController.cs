@@ -16,8 +16,6 @@ public class SystemController : MonoBehaviour {
     private Vector3 originalRotationOffset;
     public float swayOffset;
 
-    public GameObject seedFlyControllerObject;
-    private SeedFly seedFlyController;
     private float originalSwaySpeed = 1f;
 
     // timer
@@ -36,7 +34,7 @@ public class SystemController : MonoBehaviour {
         started = false;
         finished = false;
 
-        TIMER = 8f;
+        TIMER = 60f;
         CREATE_TIMER = 0.5f;
         timeRemaining = TIMER;
         timeRemainingToCreate = CREATE_TIMER;
@@ -52,7 +50,6 @@ public class SystemController : MonoBehaviour {
             originalSwaySpeed = swayController.swaySpeed;
         }
         swayOffset = 1f;
-        seedFlyController = seedFlyControllerObject.GetComponent<SeedFly>();
     }
 
     // Update is called once per frame
@@ -65,10 +62,6 @@ public class SystemController : MonoBehaviour {
         foreach (SwayController swayController in swayControllers) {
             swayController.rotationOffset = originalRotationOffset * swayOffset;
             swayController.swaySpeed = originalSwaySpeed * swayOffset;
-        }
-        if (isGameOver()) {
-            seedFlyController.trigger = true;
-            finished = true;
         }
 
         if (!started || finished) {
@@ -95,9 +88,5 @@ public class SystemController : MonoBehaviour {
 
     public bool isWithinRange() {
         return (amplitude >= MIN_AMPLIFY && amplitude <= MAX_AMPLIFY);
-    }
-
-    public bool isGameOver() {
-        return (amplitude >= MAX_GAME_OVER_AMPLIFY);
     }
 }
