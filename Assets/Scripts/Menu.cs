@@ -21,4 +21,12 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene("TrillPitchScene");
     }
+    public void level2()
+    {
+        SceneManager.LoadScene("TrillSlideMainScene");
+    }
+    public void level3()
+    {
+        SceneManager.LoadScene("TrillPitchScene");
+    }
 }

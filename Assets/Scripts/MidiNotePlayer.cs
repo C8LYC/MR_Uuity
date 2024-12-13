@@ -14,7 +14,7 @@ public class MidiNotePlayer : MonoBehaviour {
     };
 
     // Start playing a note based on the MIDI number
-    public void StartNote(int midiNumber) {
+    public void StartNote(float midiNumber) {
         if (midiNumber < 0 || midiNumber > 127) {
             Debug.LogError("Invalid MIDI number. Must be between 0 and 127.");
             return;
@@ -24,11 +24,11 @@ public class MidiNotePlayer : MonoBehaviour {
         frequency = Mathf.Pow(2, (midiNumber - 69) / 12f) * 440f;
 
         // Display the note
-        int octave = (midiNumber / 12) - 1;
-        string note = noteNames[midiNumber % 12] + octave;
-        if (noteText != null) {
-            noteText.text = "Playing: " + note + " (" + frequency.ToString("F2") + " Hz)";
-        }
+        float octave = (midiNumber / 12) - 1;
+        //string note = noteNames[midiNumber % 12] + octave;
+        //if (noteText != null) {
+        //    noteText.text = "Playing: " + note + " (" + frequency.ToString("F2") + " Hz)";
+        //}
 
         isPlaying = true; // Start generating the sine wave
     }
@@ -42,7 +42,7 @@ public class MidiNotePlayer : MonoBehaviour {
     }
 
     // Play a note for a fixed duration
-    public void PlayNoteForDuration(int midiNumber, float duration) {
+    public void PlayNoteForDuration(float midiNumber, float duration) {
         StartNote(midiNumber);
         StartCoroutine(StopNoteAfterDuration(duration));
     }

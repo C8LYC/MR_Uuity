@@ -76,7 +76,9 @@ public class GameCon : MonoBehaviour
     {
         
         Debug.Log("CountDoenToStart");
-        GlobalSettings.midiNotePlayer.PlayNoteForDuration(60, 3);
+        //GlobalSettings.midiNotePlayer.PlayNoteForDuration(64, 3);
+        GlobalSettings.midiNotePlayer.PlayNoteForDuration(58.52f, 3);
+        
         countdownText.gameObject.SetActive(true);
 
         int countdown = 3; // 倒计时时间
