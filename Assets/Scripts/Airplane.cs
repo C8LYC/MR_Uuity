@@ -166,8 +166,11 @@ public class Airplane : MonoBehaviour {
             );
             //UnityEngine.Debug.Log($"Target pitch: {targetPitch - GlobalSettings.heightOffset}, position: {transform.position.y}, vertical: {verticalInput}");
 
-            transform.position = GlobalSettings.slideControl.getPosition(currentBeat - baseTime);
-            transform.position = new Vector3(transform.position.x, height, transform.position.z);
+            nextPos = GlobalSettings.slideControl.getPosition(currentBeat - baseTime);
+            Vector3 nextPos = new Vector3(nextPos.x, height, nextPos.z);
+            Vector3 direction = (nextPos - transform.position).normalized;
+            transform.position = nextPos;
+            transform.rotation = Quaternion.LookRotation(direction);
         } else {
             rb.isKinematic = false;
             rb.useGravity = true;
