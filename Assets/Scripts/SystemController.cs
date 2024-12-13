@@ -13,6 +13,7 @@ public class SystemController : MonoBehaviour {
     public bool finished;
 	public Vector3 PlayerStartPos { get; set; }
     public Transform PlayerTransform;
+    public List<GameObject> dandelionObjects;
 
 	// Pitch
 	private int targetMidiNumber;
@@ -32,13 +33,15 @@ public class SystemController : MonoBehaviour {
 
     private float originalSwaySpeed = 1f;
 
-    // timer
+    // timers
     public float TIMER;
     private float timeRemaining;
     public float PAUSE_TIMER;
     private float timeRemainingToRestart;
     public float CREATE_TIMER;
     private float timeRemainingToCreate;
+    public float NEW_BUTTERFLY_TIMER;
+    private float timeRemainingToNewButterfly;
 
     // amplitude range
     public float MIN_AMPLIFY;
@@ -50,6 +53,7 @@ public class SystemController : MonoBehaviour {
         paused = false;
         canReset = false;
         finished = false;
+        dandelionObjects = new List<GameObject>();
 
         setNewNote();
         // isInNormalPitch = false;
@@ -60,6 +64,8 @@ public class SystemController : MonoBehaviour {
         timeRemainingToRestart = 0f;
         CREATE_TIMER = 0.5f;
         timeRemainingToCreate = CREATE_TIMER;
+        NEW_BUTTERFLY_TIMER = 5f;
+        timeRemainingToNewButterfly = NEW_BUTTERFLY_TIMER;
 
         MIN_AMPLIFY = 0.4f;
         // MAX_AMPLIFY = 0.6f;
@@ -115,9 +121,22 @@ public class SystemController : MonoBehaviour {
             timeRemainingToCreate = CREATE_TIMER;
         }
 
+        timeRemainingToNewButterfly -= Time.deltaTime;
+        if (timeRemaining <= 30f && timeRemainingToNewButterfly <= 0f) {
+            newButterfly();
+            timeRemainingToNewButterfly = NEW_BUTTERFLY_TIMER;
+        }
+
         if (timeRemaining <= 0f) {
             finished = true;
         }
+    }
+
+    void newButterfly() {
+        if (dandelionObjects.Count <= 0) {
+            return;
+        }
+        dandelionObjects[Random.Range(0, dandelionObjects.Count)].GetComponent<ButterflyController>().isPresent = true;
     }
 
     void setNewNote() {

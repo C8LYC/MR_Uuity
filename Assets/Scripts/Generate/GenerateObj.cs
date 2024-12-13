@@ -42,18 +42,19 @@ public class GenerateObj : MonoBehaviour
         objs.Add(newObj);
         newObj.transform.localPosition = RandomPointInBounds(GenerateArea.bounds);
         newObj.GetComponentInChildren<SizeLerperWithCurve>().startLerp = true;
-		SwayController[] swayControllers = newObj.GetComponentsInChildren<SwayController>();
-		if( swayControllers.Length > 0 )
-		{
-			foreach( SwayController controller in swayControllers )
-			{
-				controller.InitSetting(systemController);
-			}
-		}
-		if(gradeCounter)
-		{
-			gradeCounter.NewDandelion();
-		}
+        SwayController[] swayControllers = newObj.GetComponentsInChildren<SwayController>();
+        if( swayControllers.Length > 0 )
+        {
+          foreach( SwayController controller in swayControllers )
+          {
+            controller.InitSetting(systemController);
+          }
+        }
+        if(gradeCounter)
+        {
+          gradeCounter.NewDandelion();
+        }
+        GameObject.Find("System").GetComponent<SystemController>().dandelionObjects.Add(newObj);
     }
 	
 	public void GenerateOneBoldDandelion()

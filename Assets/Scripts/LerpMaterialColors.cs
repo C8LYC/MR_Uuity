@@ -70,6 +70,12 @@ public class LerpMaterialColors : MonoBehaviour
         }
     }
 
+    void OnDestroy() {
+        GameObject systemObject = GameObject.Find("System");
+        SystemController system = systemObject.GetComponent<SystemController>();
+        system.dandelionObjects.Remove(gameObject);
+    }
+
     private void CacheInitialColors()
     {
         initialColors = new Color[parentObject.transform.childCount][];
