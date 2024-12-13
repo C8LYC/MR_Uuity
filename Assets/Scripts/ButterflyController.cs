@@ -98,7 +98,7 @@ public class ButterflyController : MonoBehaviour {
                 isEntered = true;
             }
             moveTime += Time.deltaTime/timeToArrived;
-            butterflyGameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, moveTime);
+            butterflyGameObject.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, moveTime);
         } else {
             moveTime = 0.0f;
             isEntered = false;
@@ -106,11 +106,11 @@ public class ButterflyController : MonoBehaviour {
     }
 
     void setStartPositionWithNowPosition() {
-        startPosition = butterflyGameObject.transform.position;
+        startPosition = butterflyGameObject.transform.localPosition;
     }
 
     void setTargetPositionWithNowPosition() {
-        targetPosition = butterflyGameObject.transform.position;
+        targetPosition = butterflyGameObject.transform.localPosition;
     }
 
     void resetButterfly() {
