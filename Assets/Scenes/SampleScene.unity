@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1423,6 +1423,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SeedPerDandelion: 50
   GradeText: {fileID: 1171868086}
+  TotalGradeAnimTime: 0.5
+  AnimChangeTimes: 20
 --- !u!1 &961837105
 GameObject:
   m_ObjectHideFlags: 0
