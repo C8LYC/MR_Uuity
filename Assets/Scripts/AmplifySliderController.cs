@@ -10,6 +10,10 @@ public class AmplifySliderController : MonoBehaviour
     public Image CDBGImage;
     public GradeCounter gradeCounter;
     private Text countDownText;
+    public GameObject scale;
+    [SerializeField] private GameObject scaleMarkPrefab;
+    public bool isScrolling;
+    public float ScrollingShift;
     private SystemController systemController;
 
     private RectTransform actualAmplifyRectTransform;
@@ -20,6 +24,8 @@ public class AmplifySliderController : MonoBehaviour
     // timer
     private float TIMER;
     private float timeRemaining;
+    private float SCROLL_TIMER;
+    private float scrollTimeRemaining;
 
     // Start is called before the first frame update
     void Start() {
@@ -27,6 +33,9 @@ public class AmplifySliderController : MonoBehaviour
         actualAmplifyRectTransform = gameObject.transform.GetChild(1).gameObject.GetComponent<RectTransform>();
         systemController = GameObject.Find("System").GetComponent<SystemController>();
         systemController.amplitude = 0.0f;
+        
+        isScrolling = false;
+        ScrollingShift = 200f;
 
         MAX_Y = 240;
         MIN_Y = -240;
@@ -34,6 +43,10 @@ public class AmplifySliderController : MonoBehaviour
 
         TIMER = 3.2f;
         timeRemaining = TIMER;
+        SCROLL_TIMER = 0.8f;
+        scrollTimeRemaining = SCROLL_TIMER;
+
+        InitGenerateScale();
     }
 
     // Update is called once per frame
@@ -59,6 +72,64 @@ public class AmplifySliderController : MonoBehaviour
         if (timeRemaining <= 0f) {
             gameObject.SetActive(false);
             systemController.started = true;
+        }
+
+        if (isScrolling) {
+            Scroll(ScrollingShift);
+        }
+    }
+
+    public void StartScroll(float shift) {
+        isScrolling = true;
+        ScrollingShift = shift;
+    }
+
+    void InitGenerateScale() {
+        for (float posY = 241.5f; posY >= -241.5f; posY -= 28f) {
+            GenerateScale(posY);
+        }
+    }
+
+    void GenerateScale(float posY) {
+        GameObject newScaleMark = Instantiate(scaleMarkPrefab);
+        newScaleMark.transform.parent = scale.transform;
+        newScaleMark.GetComponent<RectTransform>().anchoredPosition = new Vector2(-5.5f, posY);
+    }
+
+    void ReSetScroll() {
+        scrollTimeRemaining = SCROLL_TIMER;
+    }
+
+    void Scroll(float shift) {
+        if (scrollTimeRemaining >= 0f) {
+            scrollTimeRemaining -= Time.deltaTime;
+            float maxPosY = 0;
+            float minPosY = 0;
+            for (int i = 0; i < scale.transform.childCount; i++) {
+                GameObject scaleMark = scale.transform.GetChild(i).gameObject;
+                float posY = scaleMark.GetComponent<RectTransform>().anchoredPosition.y + (shift * Time.deltaTime / SCROLL_TIMER);
+                if (posY > maxPosY) {
+                    maxPosY = posY;
+                }
+                if (posY < minPosY) {
+                    minPosY = posY;
+                }
+                if (posY < -241.5f || posY > 241.5f) {
+                    Destroy(scaleMark);
+                }
+                scaleMark.GetComponent<RectTransform>().anchoredPosition = new Vector2(-5.5f, posY);
+            }
+            for (; maxPosY <= 241.5f; maxPosY += 28f) {
+                Debug.Log("maxPosY = " + maxPosY);
+                GenerateScale(maxPosY);
+            }
+            for (; minPosY >= -241.5f; minPosY -= 28f) {
+                Debug.Log("minPosY = " + minPosY);
+                GenerateScale(minPosY);
+            }
+        } else {
+            isScrolling = false;
+            ReSetScroll();
         }
     }
 }
