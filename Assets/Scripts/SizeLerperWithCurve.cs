@@ -6,7 +6,7 @@ public class SizeLerperWithCurve : MonoBehaviour
     private GameObject targetObject; // Assign the GameObject to be scaled
 
     [SerializeField]
-    private bool startLerp = false; // Checkbox in the Inspector
+    public bool startLerp = false; // Checkbox in the Inspector
 
     [SerializeField]
     private float lerpDuration = 1.0f; // Duration of the scaling

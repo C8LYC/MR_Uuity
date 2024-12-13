@@ -38,7 +38,7 @@ public class GenerateObj : MonoBehaviour
         newObj.transform.localScale = Vector3.one;
         objs.Add(newObj);
         newObj.transform.localPosition = RandomPointInBounds(GenerateArea.bounds);
-        newObj.GetComponentInChildren<SizeLerperWithCurve>().Grow();
+        newObj.GetComponentInChildren<SizeLerperWithCurve>().startLerp = true;
 		if(gradeCounter)
 		{
 			gradeCounter.NewDandelion();
