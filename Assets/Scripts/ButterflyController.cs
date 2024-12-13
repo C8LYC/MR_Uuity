@@ -43,7 +43,7 @@ public class ButterflyController : MonoBehaviour {
         timeToHurtDandelion = 5f;
         remainingTime = timeToHurtDandelion;
 
-        butterflyGameObject = gameObject.transform.Find("Butterfly").gameObject;
+        //butterflyGameObject = gameObject.transform.Find("Butterfly").gameObject;
         butterflyAnimator = butterflyGameObject.GetComponent<Animator>();
         butterflyRigidbody = butterflyGameObject.GetComponent<Rigidbody>();
         

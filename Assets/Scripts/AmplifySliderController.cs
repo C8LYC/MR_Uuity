@@ -38,11 +38,11 @@ public class AmplifySliderController : MonoBehaviour
         systemController.pitch = 0.0f;
         
         isScrolling = false;
-        ScrollingShift = 200f;
+        ScrollingShift = 0.2f;
         lastTargetFrequency = 0f;
 
-        MAX_Y = 240;
-        MIN_Y = -240;
+        MAX_Y = 24f;
+        MIN_Y = -24f;
         OFFSET = MAX_Y - MIN_Y;
 
         TIMER = 3.2f;
@@ -82,16 +82,18 @@ public class AmplifySliderController : MonoBehaviour
             // gameObject.SetActive(false);
             systemController.started = true;
             systemController.PlayerStartPos = systemController.PlayerTransform.position;
-
+			CDTextImage.sprite = null;
+			CDTextImage.color = new Color(255f, 255f, 255f, 0f);
+			CDBGImage.fillAmount = 0f;
 		}
 
         if (systemController.targetPitch != lastTargetFrequency) {
-            StartScroll(lastTargetFrequency - systemController.targetPitch);
+            //StartScroll((lastTargetFrequency - systemController.targetPitch) * 0.01f);
             lastTargetFrequency = systemController.targetPitch;
         }
 
         if (isScrolling) {
-            Scroll(ScrollingShift);
+            //Scroll(ScrollingShift);
         }
     }
 

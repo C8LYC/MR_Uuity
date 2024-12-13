@@ -14,7 +14,7 @@ PORT = 5005
 # Initialize Aubio's pitch detection
 pitch_detector = aubio.pitch("default", BUFFER_SIZE, HOP_SIZE, SAMPLE_RATE)
 pitch_detector.set_unit("Hz")
-pitch_detector.set_silence(-40)  # Threshold to ignore low energy (silence)
+pitch_detector.set_silence(-50)  # Threshold to ignore low energy (silence)
 
 
 def callback(indata, frames, time, status):

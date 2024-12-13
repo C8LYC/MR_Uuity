@@ -61,7 +61,7 @@ public class GradeCounter : MonoBehaviour
         return AliveDandelion * SeedPerDandelion;
     }
 
-    public void SetGradeUI()
+    public void StartShowGradeUI()
     {
 		GradeText.text = "0";
         CurrentShowGrade = 0;

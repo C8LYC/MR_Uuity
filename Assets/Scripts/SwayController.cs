@@ -44,7 +44,7 @@ public class SwayController : MonoBehaviour
     bool IsAmplitudeInRange()
     {
         float dis = Vector3.Distance(transform.position, PlayerPos);
-        if(dis / 2f * AmplitudeRange + 0.4f < systemController.amplitude || dis / 2f * AmplitudeRange + 0.4f - AmplitudeRange / 10f > systemController.amplitude)
+        if(dis / 2f * AmplitudeRange + systemController.MIN_AMPLIFY < systemController.amplitude || dis / 2f * AmplitudeRange + systemController.MIN_AMPLIFY - AmplitudeRange / 3f > systemController.amplitude)
         {
             return false;
         }
@@ -59,7 +59,9 @@ public class SwayController : MonoBehaviour
         Vector3 currentOffset = rotationOffset * swayFactor;
         Quaternion offsetRotation = Quaternion.Euler(currentOffset);
         targetObject.transform.rotation = originalRotation * offsetRotation;
-    }
+        if(transform.parent.GetComponent<ButterflyController>().isPresent)
+			transform.parent.GetComponent<ButterflyController>().isBlown = true;
+	}
 
     void RestoreOriginalRotation()
     {

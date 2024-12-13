@@ -67,7 +67,7 @@ public class SystemController : MonoBehaviour {
         NEW_BUTTERFLY_TIMER = 5f;
         timeRemainingToNewButterfly = NEW_BUTTERFLY_TIMER;
 
-        MIN_AMPLIFY = 0.4f;
+        MIN_AMPLIFY = 0.35f;
         // MAX_AMPLIFY = 0.6f;
 
         dandelionGenerator = dandelionGeneratorObject.GetComponent<GenerateObj>();
@@ -129,7 +129,9 @@ public class SystemController : MonoBehaviour {
 
         if (timeRemaining <= 0f) {
             finished = true;
-        }
+            dandelionGeneratorObject.GetComponent<GradeCounter>()?.StartShowGradeUI();
+
+		}
     }
 
     void newButterfly() {
