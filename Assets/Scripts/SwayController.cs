@@ -9,6 +9,7 @@ public class SwayController : MonoBehaviour
 
     private Quaternion originalRotation;
     private float swayTimer = 0f;
+    public Transform Player { get; set; }
 
     void Start()
     {
