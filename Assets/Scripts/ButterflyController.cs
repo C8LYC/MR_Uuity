@@ -8,6 +8,8 @@ public class ButterflyController : MonoBehaviour {
     public float timeToArrived;
     public bool isBlown;
     public float timeToBeBlown;
+    public float timeToHurtDandelion;
+    public float remainingTime;
 
 
     public Vector3 blowDirection = new Vector3(0, 1, 2);
@@ -37,6 +39,9 @@ public class ButterflyController : MonoBehaviour {
         moveTime = 0.0f;
         timeToBeBlown = 1.0f;
         blownTime = 0.0f;
+
+        timeToHurtDandelion = 5f;
+        remainingTime = timeToHurtDandelion;
 
         butterflyGameObject = gameObject.transform.Find("Butterfly").gameObject;
         butterflyAnimator = butterflyGameObject.GetComponent<Animator>();
@@ -75,6 +80,12 @@ public class ButterflyController : MonoBehaviour {
         if (reset) {
             resetButterfly();
             reset = false;
+        }
+        if (isPresent) {
+            remainingTime -= Time.deltaTime;
+        }
+        if (remainingTime < 0f) {
+            gameObject.GetComponent<LerpMaterialColors>().enabled = true;
         }
 
         if (isPresent && isBlown != true) {
