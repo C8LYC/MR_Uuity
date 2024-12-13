@@ -71,7 +71,6 @@ public class Airplane : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         trillReceiver = new UDPReceiver(5007, ReceiveTrillData);
         pitchReceiver = new UDPReceiver(5005, ReceivePitchData);
-        StartMicrophone();
         // Start game stuff 
         introStartPosition = new Vector3(
             GlobalSettings.levelData.intro.path[0].x,
@@ -122,16 +121,6 @@ public class Airplane : MonoBehaviour {
             Time.timeScale = 0;
             UnityEngine.Debug.Log("Correct pitch detected! Loading scenes...");
         }
-    }
-
-    void StartMicrophone() {
-        if (Microphone.devices.Length > 0) {
-            string micName = Microphone.devices[0];
-            microphoneClip = Microphone.Start(micName, true, 1, (int)sampleRate);
-            isMicrophoneActive = true;
-            UnityEngine.Debug.Log($"Microphone started: {micName}");
-        }
-        else UnityEngine.Debug.LogError("No microphone detected!");
     }
 
     void Update() {

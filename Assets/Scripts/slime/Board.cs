@@ -246,7 +246,7 @@ public class Board : MonoBehaviour
 
         // 计算箱子的位置
         //Vector3 boxPosition = boardStartPosition + board.transform.right * boxOffset; // 起始点向右偏移 boxOffset 距离
-        boxPosition.y = board.transform.position.y + 0.5f; // 稍微抬高以便可见
+        boxPosition.y = board.transform.position.y + 0.05f; // 稍微抬高以便可见
 
         // 生成箱子
         GameObject box = Instantiate(boxPrefab, boxPosition, Quaternion.identity, spawnParent);
@@ -259,7 +259,7 @@ public class Board : MonoBehaviour
         BoxController boxController = box.AddComponent<BoxController>();
         boxController.board = board; // 关联箱子的板子
         boxController.destroyHeight = board.transform.position.y - 5f; // 设置最低销毁高度
-        boxController.boardMargin = 1f; // 设置板子边界范围
+        boxController.boardMargin = 0.1f; // 设置板子边界范围
         boxController.box = box;
 
 

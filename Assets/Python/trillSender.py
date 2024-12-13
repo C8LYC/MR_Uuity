@@ -22,7 +22,7 @@ normal_cutoff = CUTOFF_FREQ / nyquist
 b, a = butter(ORDER, normal_cutoff, btype='low', analog=False)
 
 # Thresholds
-AMPLITUDE_THRESH = 0.08    # Minimum amplitude threshold
+AMPLITUDE_THRESH = 0.02    # Minimum amplitude threshold
 FREQ_LOW = 19             # Minimum frequency threshold (Hz)
 FREQ_HIGH = 32             # Maximum frequency threshold (Hz)
 PERIODICITY_THRESH = 0.015  # Maximum standard deviation for peak intervals to be periodic

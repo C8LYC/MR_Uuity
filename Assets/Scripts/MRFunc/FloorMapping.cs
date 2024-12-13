@@ -1,6 +1,7 @@
 using Meta.XR.MRUtilityKit;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using static FloorMapping;
@@ -26,6 +27,8 @@ public class FloorMapping : MonoBehaviour
 	public int MaxIterations = 1000;
 	[SerializeField, Tooltip("When using surface spawning, use this to filter which anchor labels should be included. Eg, spawn only on TABLE or OTHER.")]
 	public MRUKAnchor.SceneLabels Labels = ~(MRUKAnchor.SceneLabels) 0;
+
+	public GameObject PlayerObj;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -39,6 +42,7 @@ public class FloorMapping : MonoBehaviour
     }
 
 	/// <summary>
+	/// Current no use!!!!!!!!!!!!    
 	/// Starts the spawning process for all rooms.
 	/// </summary>
 	public void MapToMRFloor()
@@ -49,7 +53,55 @@ public class FloorMapping : MonoBehaviour
 			MapToMRFloor(room);
 		}
 	}
+	
+	/// <summary>
+	/// Starts the spawning process for all rooms.
+	/// </summary>
+	public void MapToTable()
+	{
+		Debug.Log("MapToTable");
+		foreach (var room in MRUK.Instance.Rooms)
+		{
+			MapToTable(room);
+			//room.AnchorCreatedEvent.AddListener(TryMapToTable);
+		}
+	}
 
+	public void MapToTable(MRUKRoom room)
+	{
+		MRUKAnchor[] RoomAnchors = room.GetComponentsInChildren<MRUKAnchor>();
+		MRUKAnchor Best = null;
+		if (RoomAnchors.Length > 0)
+		{
+			float distance = Mathf.Infinity;
+			foreach(var anchor in RoomAnchors)
+			{
+				if(anchor.Label == Labels)
+				{
+					float CurDistance = Vector3.Distance(PlayerObj.transform.position, anchor.transform.position);
+					if(CurDistance < distance)
+					{
+						distance = CurDistance;
+						Best = anchor;
+					}
+				}
+			}
+			if(Best == null)
+			{
+				Debug.LogError("No table");
+				return;
+			}
+			Vector3 TableSize = new Vector3(Best.PlaneBoundary2D[0].x, 0f, Best.PlaneBoundary2D[0].y);
+			gameObject.transform.position = Best.transform.position;
+			GetComponent<BoxCollider>().size = TableSize;
+		}
+	}
+
+
+	/// <summary>
+	/// current no use
+	/// </summary>
+	/// <param name="room"></param>
 	public void MapToMRFloor(MRUKRoom room)
     {
 		var prefabBounds = Utilities.GetPrefabBounds(gameObject);

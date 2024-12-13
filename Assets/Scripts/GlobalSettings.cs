@@ -8,9 +8,9 @@ public static class GlobalSettings {
     public static LevelGeneratorSlide slideControl = null;
     public static SceneManagement sceneManager = null;
     public static MidiNotePlayer midiNotePlayer = null;
-    public static float heightOffset = 12f;
+    public static float heightOffset = 1f;
     public static int basePitch = 69;
-    public static float pitchSensitivity = 3;
+    public static float pitchSensitivity = 0.5f;
     public static float timeRatio = 0.5f;
     public static string jsonFilePath = "Assets/Levels/game.json";
     public static LevelData levelData = null;

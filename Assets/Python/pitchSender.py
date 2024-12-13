@@ -10,8 +10,8 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Set up audio parameters
 SAMPLE_RATE = 44100  # Sample rate for the microphone input
-BUFFER_SIZE = 512  # Number of frames per buffer (buffer size)
-HOP_SIZE = 512  # Number of frames between pitch calculations
+BUFFER_SIZE = 2048  # Number of frames per buffer (buffer size)
+HOP_SIZE = 2048  # Number of frames between pitch calculations
 
 # Initialize Aubio's pitch detection
 pitch_detector = aubio.pitch("default", BUFFER_SIZE, HOP_SIZE, SAMPLE_RATE)

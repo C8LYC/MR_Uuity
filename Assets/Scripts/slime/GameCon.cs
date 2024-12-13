@@ -37,7 +37,7 @@ public class GameCon : MonoBehaviour
         // 确保游戏开始前按钮可见，倒计时文本隐藏
         startButton.SetActive(true);
         countdownText.gameObject.SetActive(false);
-        GameObject targetObject = GameObject.Find("Main Camera");
+        GameObject targetObject = GameObject.Find("Player");
         GlobalSettings.midiNotePlayer = targetObject.GetComponent<MidiNotePlayer>();
 
 

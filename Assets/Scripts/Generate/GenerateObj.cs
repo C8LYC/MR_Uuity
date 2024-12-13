@@ -9,6 +9,7 @@ public class GenerateObj : MonoBehaviour
     public BoxCollider GenerateArea;
 	public bool TestGenerate = true;
 	public float MaxGenerateTime = 3f;
+	public GameObject BoldDandelionPrefab;
 	float GenerateTime = 3f;
 	GradeCounter gradeCounter;
 
@@ -34,6 +35,20 @@ public class GenerateObj : MonoBehaviour
     public void GenerateOneObj()
     {
         GameObject newObj = Instantiate(GenerateObjPrefab, GenerateArea.transform);
+        newObj.transform.parent = null;
+        newObj.transform.localScale = Vector3.one;
+        objs.Add(newObj);
+        newObj.transform.localPosition = RandomPointInBounds(GenerateArea.bounds);
+        newObj.GetComponentInChildren<SizeLerperWithCurve>().startLerp = true;
+		if(gradeCounter)
+		{
+			gradeCounter.NewDandelion();
+		}
+    }
+	
+	public void GenerateOneBoldDandelion()
+    {
+        GameObject newObj = Instantiate(BoldDandelionPrefab, GenerateArea.transform);
         newObj.transform.parent = null;
         newObj.transform.localScale = Vector3.one;
         objs.Add(newObj);
