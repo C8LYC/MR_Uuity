@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 30725549}
-  hoopPrefab: {fileID: 1864373025951379566, guid: 20ed09f7ee8b04b998976e5b15801c77, type: 3}
+  hoopPrefab: {fileID: 1417597418923323240, guid: 25fe17179a8f5405fb69ced1aaa653da, type: 3}
   coinPrefab: {fileID: 2777388872842823792, guid: 5b98906bd9e5945e4b609ae017273d0b, type: 3}
   boardPrefab: {fileID: 6398881268436254362, guid: 222f69c08c1294a468b303fc4b71d487, type: 3}
 --- !u!114 &30725552

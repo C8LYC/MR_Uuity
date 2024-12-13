@@ -55,6 +55,10 @@ public class Airplane : MonoBehaviour {
     private AudioClip microphoneClip;
     private bool isMicrophoneActive = false;
 
+    [Header("Hoopar Settings")]
+    private int hoopCount = 0;
+    private int hooparCount = 0;
+
 
     void Awake() {
         baseTime = GlobalSettings.curBeat();
@@ -145,6 +149,10 @@ public class Airplane : MonoBehaviour {
         }
         // Use aubio_get_pitch to detect pitch and update targetPitch
         if (GlobalSettings.level == -1) return;
+        if (hooparCount > hoopCount) {
+            
+            GlobalSettings.gameState = -1;
+        }
         float currentBeat = GlobalSettings.curBeat();
         UnityEngine.Debug.LogWarning($"Debug: curMode={curMode}, level={GlobalSettings.level}");
         if (curMode != GlobalSettings.level) {
@@ -166,11 +174,16 @@ public class Airplane : MonoBehaviour {
             );
             //UnityEngine.Debug.Log($"Target pitch: {targetPitch - GlobalSettings.heightOffset}, position: {transform.position.y}, vertical: {verticalInput}");
 
-            nextPos = GlobalSettings.slideControl.getPosition(currentBeat - baseTime);
-            Vector3 nextPos = new Vector3(nextPos.x, height, nextPos.z);
+            Vector3 nextPos = GlobalSettings.slideControl.getPosition(currentBeat - baseTime);
+            nextPos = new Vector3(nextPos.x, height, nextPos.z);
+
+            // Compute the direction and rotation
             Vector3 direction = (nextPos - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            // Update position and smoothly rotate towards the target
             transform.position = nextPos;
-            transform.rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f);
         } else {
             rb.isKinematic = false;
             rb.useGravity = true;
@@ -192,8 +205,18 @@ public class Airplane : MonoBehaviour {
             GlobalSettings.sceneManager.EndGame();
             Destroy(gameObject);
         }
-        if (collision.gameObject.CompareTag("Hoop")) {
-            GlobalSettings.gameState = -1;
+       
+    }
+    void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Hoop")) {
+            hoopCount++; // Increment the hoopCount
+            UnityEngine.Debug.LogWarning("hit hoop");
+            other.enabled = false;
+        }
+        else if (other.CompareTag("Hoopar")) {
+            hooparCount++; // Increment the hooparCount
+            UnityEngine.Debug.LogWarning("hit hoopar");
+            other.enabled = false;
         }
     }
     public float getPitch() {

@@ -110,8 +110,10 @@ public class LevelGeneratorSlide : MonoBehaviour {
         lookRotation *= Quaternion.Euler(90f, 0f, 0f);
 
         GameObject createdHoop = Instantiate(hoopPrefab, position, lookRotation, parent.transform);
-
-        HoopControl hoopControl = createdHoop.GetComponent<HoopControl>();
+        Vector3 tmpPos = createdHoop.transform.position;
+        createdHoop.transform.position = tmpPos;
+        // - createdHoop.transform.right.normalized * 13 + createdHoop.transform.forward.normalized * 13;
+        HoopControl hoopControl = createdHoop.transform.Find("Hoop").GetComponent<HoopControl>();
         if (hoopControl != null) {
             hoopControl.midiNote = midiNote;
         } else {

@@ -30,7 +30,7 @@
           {"x": 150, "z": 150}
         ],
         "level": [
-          {"eventType": 0, "eventLength": 2, "startKey": 0, "endKey": 0},
+          {"eventType": 0, "eventLength": 6, "startKey": 0, "endKey": 0},
           {"eventType": 1, "eventLength": 2, "startKey": 69, "endKey": 69},
           {"eventType": 2, "eventLength": 2, "startKey": 69, "endKey": 69},
           {"eventType": 1, "eventLength": 4, "startKey": 69, "endKey": 69},
