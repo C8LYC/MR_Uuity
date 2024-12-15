@@ -17,7 +17,7 @@ public static class GlobalSettings {
     public static bool isInit = false;
 
     public static float groundLevel = 0f;
-    public static float ceilingLevel = 500f;
+    public static float ceilingLevel = 4f;
 
 
     public static int mode = 0;
@@ -27,8 +27,12 @@ public static class GlobalSettings {
     public static int gameState = 0; // 0: haven't started yet, 1: started, 2: win, -1: lose (?)
     public static int score = 0;
 
-    public static float key2height(float key) {
-        return Mathf.Clamp((key + heightOffset - basePitch) * pitchSensitivity, groundLevel, ceilingLevel);
+	public static float key2height(float key) {
+	    float lowestKey = 60f;
+	    float highestKey = 85f;
+
+	    float height = Mathf.Lerp(groundLevel, ceilingLevel, (key - lowestKey) / (highestKey - lowestKey));
+	    return Mathf.Clamp(height, groundLevel, ceilingLevel);
     }
     public static float curBeat() { //Time to 拍子 
         return Time.time / timeRatio;

@@ -12,8 +12,8 @@ public class LevelData {
 
         [System.Serializable]
         public class Point {
-            public int x;
-            public int z;
+            public float x;
+            public float z;
         }
     }
 
@@ -24,8 +24,8 @@ public class LevelData {
 
         [System.Serializable]
         public class Point {
-            public int x;
-            public int z;
+            public float x;
+            public float z;
         }
 
         [System.Serializable]

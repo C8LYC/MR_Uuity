@@ -155,16 +155,16 @@ public class Airplane : MonoBehaviour {
 
         if (trillState && GlobalSettings.gameState != -1) {
             rb.useGravity = false;
-            float height = GlobalSettings.key2height(targetPitch);
-            float verticalInput = Mathf.Lerp(
-                transform.position.y,
-                height,
-                Time.deltaTime * lerpSpeed // Increase interpolation speed
-            );
-            //UnityEngine.Debug.Log($"Target pitch: {targetPitch - GlobalSettings.heightOffset}, position: {transform.position.y}, vertical: {verticalInput}");
 
+            // Calculate the target height with Lerp for smoother Y-axis movement
+            float currentY = transform.position.y;
+            float targetY = Mathf.Lerp(currentY, GlobalSettings.key2height(targetPitch), Time.deltaTime * lerpSpeed);
+
+            // Get the next position from slide control
             Vector3 nextPos = GlobalSettings.slideControl.getPosition(currentBeat - baseTime);
-            nextPos = new Vector3(nextPos.x, height, nextPos.z);
+            
+            // Update Y position with the smoothly interpolated height
+            nextPos = new Vector3(nextPos.x, targetY, nextPos.z);
 
             // Compute the direction and rotation
             Vector3 direction = (nextPos - transform.position).normalized;
@@ -173,7 +173,8 @@ public class Airplane : MonoBehaviour {
             // Update position and smoothly rotate towards the target
             transform.position = nextPos;
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f);
-        } else {
+        }
+        else {
             rb.isKinematic = false;
             rb.useGravity = true;
             Vector3 targetPosition = GlobalSettings.slideControl.getPosition(currentBeat - baseTime);
@@ -200,12 +201,12 @@ public class Airplane : MonoBehaviour {
         if (other.CompareTag("Hoop")) {
             hoopCount++; // Increment the hoopCount
             UnityEngine.Debug.LogWarning("hit hoop");
-            other.enabled = false;
+            Destroy(other.gameObject);
         }
         else if (other.CompareTag("Hoopar")) {
             hooparCount++; // Increment the hooparCount
             UnityEngine.Debug.LogWarning("hit hoopar");
-            other.enabled = false;
+            Destroy(other.gameObject);
         }
     }
     public float getPitch() {

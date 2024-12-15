@@ -97,7 +97,7 @@ public class LevelGeneratorSlide : MonoBehaviour {
 
     void CreateBoard(float height, float time) { // Create a hoop at the specified key point
         Vector3 position = getPosition(time);
-        position.y = height - 3;
+        position.y = height - 0.5f;
         Quaternion lookRotation = Quaternion.LookRotation(getForward(time));
         //lookRotation *= Quaternion.Euler(90f, 0f, 0f);
         Instantiate(boardPrefab, position, lookRotation, parent.transform);
